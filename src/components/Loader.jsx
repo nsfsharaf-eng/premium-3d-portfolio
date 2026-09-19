@@ -6,8 +6,23 @@ export default function Loader({ onComplete }) {
   const containerRef = useRef(null);
   const counterRef = useRef(null);
   const logoRef = useRef(null);
+  const onCompleteRef = useRef(onComplete);
+  onCompleteRef.current = onComplete;
 
   useEffect(() => {
+    // Tie animation time to the wall clock. GSAP's default lag smoothing only
+    // advances 33ms of tween time per frame after a >500ms gap, so wherever
+    // requestAnimationFrame is throttled (background tabs, battery saver,
+    // low-end devices) the loader would otherwise crawl or appear stuck.
+    gsap.ticker.lagSmoothing(0);
+
+    let finished = false;
+    const finish = () => {
+      if (finished) return;
+      finished = true;
+      if (onCompleteRef.current) onCompleteRef.current();
+    };
+
     const obj = { value: 0 };
     const counterTween = gsap.to(obj, {
       value: 100,
@@ -18,9 +33,7 @@ export default function Loader({ onComplete }) {
       },
       onComplete: () => {
         const tl = gsap.timeline({
-          onComplete: () => {
-            if (onComplete) onComplete();
-          }
+          onComplete: finish
         });
 
         tl.to(logoRef.current, {
@@ -43,15 +56,20 @@ export default function Loader({ onComplete }) {
       }
     });
 
-    gsap.fromTo(logoRef.current, 
+    const logoPulse = gsap.fromTo(logoRef.current,
       { scale: 0.9, opacity: 0.7 },
       { scale: 1.05, opacity: 1, repeat: -1, yoyo: true, duration: 0.8, ease: 'sine.inOut' }
     );
 
+    // Failsafe: never trap a visitor on the loading screen.
+    const failsafe = setTimeout(finish, 5000);
+
     return () => {
       counterTween.kill();
+      logoPulse.kill();
+      clearTimeout(failsafe);
     };
-  }, [onComplete]);
+  }, []);
 
   return (
     <div
