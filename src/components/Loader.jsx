@@ -118,10 +118,19 @@ export default function Loader({ onComplete }) {
             />
           </svg>
 
-          <div className="relative flex h-28 w-28 flex-col items-center justify-center overflow-hidden rounded-[2rem] border border-accent/25 bg-[#07100b]/90 shadow-[inset_0_0_35px_rgba(31,223,100,.06),0_0_50px_rgba(31,223,100,.12)] sm:h-32 sm:w-32">
-            <div aria-hidden="true" className="absolute inset-x-0 h-px animate-[scan_1.7s_ease-in-out_infinite] bg-gradient-to-r from-transparent via-accent/80 to-transparent shadow-[0_0_10px_rgba(31,223,100,.8)] motion-reduce:animate-none" />
-            <span className="font-display text-4xl font-bold tracking-[0.12em] text-accent sm:text-5xl">NS</span>
-            <span className="mt-1 font-mono text-[7px] uppercase tracking-[0.34em] text-white/35">Creative dev</span>
+          <div className="relative flex h-28 w-28 items-center justify-center rounded-full border border-accent/35 bg-[#07100b]/90 p-1.5 shadow-[inset_0_0_35px_rgba(31,223,100,.06),0_0_50px_rgba(31,223,100,.16)] sm:h-32 sm:w-32">
+            <div className="relative h-full w-full overflow-hidden rounded-full border border-white/10 bg-[#07100b]">
+              <img
+                src="/assets/profile.png"
+                alt="MFA Naseef Sharaf"
+                className="h-full w-full object-cover object-top"
+                onError={(event) => {
+                  event.currentTarget.src = '/assets/profile.jpg';
+                }}
+              />
+              <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#020503]/25 via-transparent to-accent/[0.06]" />
+              <div aria-hidden="true" className="absolute inset-x-0 h-px animate-[scan_1.7s_ease-in-out_infinite] bg-gradient-to-r from-transparent via-accent/80 to-transparent shadow-[0_0_10px_rgba(31,223,100,.8)] motion-reduce:animate-none" />
+            </div>
           </div>
         </div>
 
