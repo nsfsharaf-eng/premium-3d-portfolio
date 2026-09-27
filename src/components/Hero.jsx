@@ -46,7 +46,7 @@ export default function Hero({ theme = 'dark' }) {
     { icon: <FaWhatsapp />, url: 'https://wa.me/94720243581?text=Hello%20Naseef%2C%20I%20visited%20your%20portfolio.', label: 'WhatsApp' },
     { icon: <FaLinkedinIn />, url: 'https://www.linkedin.com/in/naseef-sharaf-mfa-291293346/', label: 'LinkedIn' },
     { icon: <FaGithub />, url: 'https://github.com/Nashaf-engr', label: 'GitHub' },
-    { icon: <FaInstagram />, url: 'https://www.instagram.com/itz.ur.nx_shx_f', label: 'Instagram' },
+    { icon: <FaInstagram />, url: 'https://www.instagram.com/er.nsf_sharaf_/', label: 'Instagram' },
   ];
 
   const stats = [
