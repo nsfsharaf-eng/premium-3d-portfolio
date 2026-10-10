@@ -39,9 +39,9 @@ export default function CustomCursor() {
     const onMouseEnterLink = () => {
       gsap.to(ring, {
         scale: 2.2,
-        backgroundColor: 'rgba(31, 223, 100, 0.1)',
-        borderColor: 'rgba(31, 223, 100, 0.8)',
-        borderWidth: '1px',
+        backgroundColor: 'rgba(45, 129, 255, 0.15)',
+        borderColor: 'rgba(45, 129, 255, 0.9)',
+        borderWidth: '1.5px',
         duration: 0.3
       });
       gsap.to(dot, {
@@ -55,7 +55,7 @@ export default function CustomCursor() {
       gsap.to(ring, {
         scale: 1,
         backgroundColor: 'transparent',
-        borderColor: 'rgba(31, 223, 100, 0.4)',
+        borderColor: 'rgba(45, 129, 255, 0.45)',
         borderWidth: '1.5px',
         duration: 0.3
       });
@@ -98,11 +98,11 @@ export default function CustomCursor() {
     <>
       <div
         ref={cursorRingRef}
-        className="fixed top-0 left-0 w-8 h-8 rounded-full border-[1.5px] border-accent/40 pointer-events-none z-[9999] mix-blend-screen transition-transform duration-75 ease-out"
+        className="fixed top-0 left-0 w-8 h-8 rounded-full border-[1.5px] border-[#2d81ff]/50 pointer-events-none z-[9999] transition-transform duration-75 ease-out shadow-[0_0_12px_rgba(45,129,255,0.25)]"
       />
       <div
         ref={cursorDotRef}
-        className="fixed top-0 left-0 w-2 h-2 rounded-full bg-accent pointer-events-none z-[9999] shadow-[0_0_12px_#1fdf64]"
+        className="fixed top-0 left-0 w-2 h-2 rounded-full bg-[#2d81ff] pointer-events-none z-[9999] shadow-[0_0_12px_#2d81ff]"
       />
     </>
   );
