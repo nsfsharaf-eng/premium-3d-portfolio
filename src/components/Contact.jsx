@@ -27,8 +27,8 @@ export default function Contact({ onShowToast }) {
     {
       code: 'GITHUB_VCS',
       label: 'GitHub Codebase',
-      value: 'Nashaf-engr',
-      url: 'https://github.com/Nashaf-engr',
+      value: 'nsfsharaf-eng',
+      url: 'https://github.com/nsfsharaf-eng',
       icon: FaGithub,
       action: 'Follow ↗',
     },
