@@ -33,7 +33,7 @@ const TOOLS = [
 ];
 
 const SOCIAL_LINKS = [
-  { icon: FaGithub, url: 'https://github.com/Nashaf-engr', label: 'GitHub' },
+  { icon: FaGithub, url: 'https://github.com/nsfsharaf-eng', label: 'GitHub' },
   { icon: FaLinkedin, url: 'https://www.linkedin.com/in/naseef-sharaf-mfa-291293346/', label: 'LinkedIn' },
   { icon: FaWhatsapp, url: 'https://wa.me/94720243581?text=Hello%20Naseef%2C%20I%20visited%20your%20portfolio.', label: 'WhatsApp' },
   { icon: FaInstagram, url: 'https://www.instagram.com/er.nsf_sharaf_/', label: 'Instagram' },
