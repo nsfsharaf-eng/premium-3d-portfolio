@@ -24,7 +24,7 @@ export default function Footer() {
     { label: 'GitHub Profile', url: 'https://github.com/Nashaf-engr', icon: FaGithub },
     { label: 'LinkedIn Network', url: 'https://www.linkedin.com/in/naseef-sharaf-mfa-291293346/', icon: FaLinkedinIn },
     { label: 'WhatsApp Direct', url: 'https://wa.me/94720243581?text=Hello%20Naseef%2C%20I%20visited%20your%20portfolio.', icon: FaWhatsapp },
-    { label: 'Instagram Profile', url: 'https://www.instagram.com/itz.ur.nx_shx_f', icon: FaInstagram },
+    { label: 'Instagram Profile', url: 'https://www.instagram.com/er.nsf_sharaf_/', icon: FaInstagram },
   ];
 
   const scrollTo = (id) => {
