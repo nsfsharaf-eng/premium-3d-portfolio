@@ -239,7 +239,7 @@ export default function Navbar({ theme, setTheme, onAddTestimonial }) {
           
           {/* GitHub Icon Cell */}
           <a
-            href="https://github.com/Nashaf-engr"
+            href="https://github.com/nsfsharaf-eng"
             target="_blank"
             rel="noreferrer"
             aria-label="GitHub Profile"
@@ -318,4 +318,4 @@ export default function Navbar({ theme, setTheme, onAddTestimonial }) {
       )}
     </header>
   );
-}
+          }
