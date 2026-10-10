@@ -28,7 +28,7 @@ export default function SectionFrame({
         </span>
 
         {/* Sticky Eyebrow HUD Header */}
-        <div className="sticky top-12 z-30 border-y border-line bg-bg/90 backdrop-blur-md">
+        <div className="sticky top-12 z-30 border-b border-line bg-bg/80 backdrop-blur-md shadow-sm transition-colors">
           <div className="flex items-center justify-between gap-4 px-6 py-3 md:px-10">
             <p className="hud-label text-muted">
               <span className="text-faint">{index}</span>
