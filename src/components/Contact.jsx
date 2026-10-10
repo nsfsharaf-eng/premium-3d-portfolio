@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import SectionFrame from './SectionFrame';
-import { FaWhatsapp, FaLinkedinIn, FaGithub, FaEnvelope } from 'react-icons/fa';
+import { FaWhatsapp, FaLinkedinIn, FaGithub, FaEnvelope, FaInstagram } from 'react-icons/fa';
 import { LuSend, LuArrowUpRight } from 'react-icons/lu';
 
 export default function Contact({ onShowToast }) {
@@ -30,6 +30,14 @@ export default function Contact({ onShowToast }) {
       value: 'Nashaf-engr',
       url: 'https://github.com/Nashaf-engr',
       icon: FaGithub,
+      action: 'Follow ↗',
+    },
+    {
+      code: 'INSTAGRAM_FEED',
+      label: 'Instagram Direct',
+      value: '@er.nsf_sharaf_',
+      url: 'https://www.instagram.com/er.nsf_sharaf_/',
+      icon: FaInstagram,
       action: 'Follow ↗',
     },
     {
