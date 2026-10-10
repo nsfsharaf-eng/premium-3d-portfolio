@@ -1,241 +1,187 @@
-import { useState, useEffect, useRef } from 'react';
-import AOS from 'aos';
-import SectionHeader from './SectionHeader';
-import ProgressBar from './ProgressBar';
-import Badge from './Badge';
-import CardLayout from './CardLayout';
+import { useEffect, useRef, useState } from 'react';
+import SectionFrame from './SectionFrame';
 
 const linearSkills = [
-  { label: 'Frontend Development (React, JavaScript, HTML5, CSS3)', target: 92 },
-  { label: 'UI/UX & Graphic Design (Figma, Photoshop, Illustrator)', target: 85 },
-  { label: 'Programming & Logic (Python, C++)', target: 78 },
-  { label: 'IoT & Embedded Systems (Arduino, Sensors)', target: 72 },
+  { label: 'Frontend Development (React 19, JavaScript, HTML5/CSS3)', percent: 92, code: 'FE_DEV' },
+  { label: 'UI/UX & Visual Design (Figma, Photoshop, Illustrator)', percent: 85, code: 'UI_UX' },
+  { label: 'Programming & Logic (Python, C++, Algorithms)', percent: 78, code: 'CORE_LOGIC' },
+  { label: 'IoT & Hardware Systems (Arduino, Sensor Telemetry)', percent: 72, code: 'EMBEDDED' },
 ];
 
-const techStack = [
-  'JavaScript',
-  'React',
-  'HTML5',
-  'CSS3',
-  'Tailwind CSS',
-  'Python',
-  'C++',
-  'Arduino',
-  'IoT & Hardware Sensors',
-  'GSAP',
-  'Framer Motion',
-  'Adobe Photoshop',
-  'Adobe Illustrator',
-  'Canva',
-  'Figma',
-  'Git',
-  'GitHub',
-  'Vite',
-  'REST APIs',
-  'Responsive UI',
+const circularMeters = [
+  { title: 'Web Systems', percent: 95, detail: 'Architecture, State & Speed' },
+  { title: 'Interface Design', percent: 88, detail: 'Typography & Visual Taste' },
+  { title: 'Hardware Logic', percent: 82, detail: 'Logic Synthesis & Systems' },
+];
+
+const toolCategories = [
+  {
+    category: 'LANGUAGES',
+    tools: ['JavaScript (ES6+)', 'Python 3', 'C++ (STL)', 'HTML5', 'CSS3 / PostCSS'],
+  },
+  {
+    category: 'FRAMEWORKS & WEB',
+    tools: ['React 19', 'Vite 8.0', 'Tailwind CSS 3.4', 'Three.js (WebGL)', 'GSAP 3', 'REST APIs'],
+  },
+  {
+    category: 'EMBEDDED & HARDWARE',
+    tools: ['Arduino Microcontrollers', 'Hardware Sensors', 'Circuit Synthesis', 'I2C / SPI Telemetry'],
+  },
+  {
+    category: 'CREATIVE & DESIGN',
+    tools: ['Adobe Photoshop', 'Adobe Illustrator', 'Figma', 'Canva Pro', 'Design Tokens'],
+  },
+  {
+    category: 'WORKFLOW & VCS',
+    tools: ['Git & GitHub', 'VS Code Pro', 'Node.js', 'Vercel / Cloudflare', 'Linux Shell'],
+  },
 ];
 
 export default function Skills() {
-  const [webDev, setWebDev] = useState(0);
-  const [design, setDesign] = useState(0);
-  const [engLogic, setEngLogic] = useState(0);
-  const [scrollProgress, setScrollProgress] = useState(0);
-  const metersRef = useRef(null);
+  const [inView, setInView] = useState(false);
+  const containerRef = useRef(null);
 
   useEffect(() => {
-    AOS.init();
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+        }
+      },
+      { threshold: 0.15 }
+    );
 
-    const handleScroll = () => {
-      const el = metersRef.current;
-      if (!el) return;
+    if (containerRef.current) {
+      observer.observe(containerRef.current);
+    }
 
-      const rect = el.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
-
-      // Start filling when card enters bottom (95% of viewport)
-      // Fully complete when card reaches comfortable middle view (40% of viewport)
-      const start = windowHeight * 0.95;
-      const end = windowHeight * 0.40;
-
-      let progress = 0;
-      if (rect.top <= end) {
-        progress = 1;
-      } else if (rect.top < start) {
-        const raw = (start - rect.top) / (start - end);
-        const clamped = Math.max(0, Math.min(1, raw));
-        // Smooth easeOut quad for natural filling feel
-        progress = 1 - Math.pow(1 - clamped, 2);
-      } else {
-        progress = 0;
-      }
-
-      setScrollProgress(progress);
-      setWebDev(Math.round(progress * 95));
-      setDesign(Math.round(progress * 88));
-      setEngLogic(Math.round(progress * 82));
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => observer.disconnect();
   }, []);
 
   return (
-    <section id="skills" className="relative w-full py-8 sm:py-12">
-      <SectionHeader title="Skills & Competencies" subtitle="Technical Capabilities & Software Ecosystem" />
+    <SectionFrame
+      id="skills"
+      index="04"
+      title="Technical Stack"
+      meta="Telemetry & Toolset"
+      headline="Languages,"
+      italicWord="systems"
+      headlineAfter="& precision tools."
+      subheading="A disciplined technical repertoire spanning full-stack web architectures, hardware microcontroller engineering, and graphic design systems."
+    >
+      <div ref={containerRef} className="grid gap-px border-t border-line bg-line lg:grid-cols-12">
+        
+        {/* Left Column (5 cols): Telemetry & Dynamic Meters */}
+        <div className="lg:col-span-5 bg-bg p-6 md:p-8 space-y-8">
+          <div>
+            <div className="flex items-center justify-between border-b border-line pb-3 mb-6">
+              <span className="hud-label text-faint">TELEMETRY // PROFICIENCY</span>
+              <span className="hud-label text-accent">REAL-TIME</span>
+            </div>
 
-      <div className="max-w-7xl mx-auto px-4 md:px-8 space-y-6" data-aos="fade-up">
-        {/* Top Grid: Circular Capability Meters + Summary */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-          
-          {/* Circular Capability Meters Card */}
-          <div className="lg:col-span-5" ref={metersRef}>
-            <CardLayout>
-              <div className="card-base p-6 md:p-8 h-full flex flex-col justify-between space-y-4">
-                <h3 className="font-display font-bold text-base text-snow uppercase tracking-wider border-b border-white/5 pb-3">
-                  Core Competencies
-                </h3>
+            {/* Circular Gauges Row */}
+            <div className="grid grid-cols-3 gap-2 py-2">
+              {circularMeters.map((meter, idx) => {
+                const radius = 34;
+                const circumference = 2 * Math.PI * radius;
+                const strokeDashoffset = circumference - (meter.percent / 100) * circumference;
 
-                <div className="flex items-center justify-around py-4">
-                  {/* Circle 1 */}
-                  <div className="flex flex-col items-center gap-2">
-                    <div className="relative w-18 h-18 sm:w-20 sm:h-20 flex items-center justify-center">
-                      <svg className="w-full h-full -rotate-90" viewBox="0 0 80 80">
+                return (
+                  <div key={idx} className="flex flex-col items-center text-center p-2 border border-line bg-bg-raised">
+                    <div className="relative w-20 h-20 flex items-center justify-center">
+                      <svg className="w-20 h-20 -rotate-90">
                         <circle
                           cx="40"
                           cy="40"
-                          r="32"
-                          className="stroke-gray-800 fill-none"
+                          r={radius}
+                          stroke="var(--line)"
                           strokeWidth="4"
+                          fill="transparent"
                         />
                         <circle
                           cx="40"
                           cy="40"
-                          r="32"
-                          className="stroke-accent fill-none transition-all duration-300 ease-out"
+                          r={radius}
+                          stroke="var(--accent)"
                           strokeWidth="4"
-                          strokeDasharray={2 * Math.PI * 32}
-                          strokeDashoffset={2 * Math.PI * 32 * (1 - webDev / 100)}
-                          strokeLinecap="round"
+                          fill="transparent"
+                          strokeDasharray={circumference}
+                          strokeDashoffset={inView ? strokeDashoffset : circumference}
+                          strokeLinecap="square"
+                          className="transition-all duration-1000 ease-out"
                         />
                       </svg>
-                      <span className="absolute text-sm font-bold font-mono text-snow">
-                        {webDev}%
+                      <span className="absolute font-mono font-bold text-xs text-ink-strong">
+                        {inView ? `${meter.percent}%` : '0%'}
                       </span>
                     </div>
-                    <span className="text-xs font-mono font-medium text-light-gray">Web Dev</span>
-                  </div>
 
-                  {/* Circle 2 */}
-                  <div className="flex flex-col items-center gap-2">
-                    <div className="relative w-18 h-18 sm:w-20 sm:h-20 flex items-center justify-center">
-                      <svg className="w-full h-full -rotate-90" viewBox="0 0 80 80">
-                        <circle
-                          cx="40"
-                          cy="40"
-                          r="32"
-                          className="stroke-gray-800 fill-none"
-                          strokeWidth="4"
-                        />
-                        <circle
-                          cx="40"
-                          cy="40"
-                          r="32"
-                          className="stroke-accent fill-none transition-all duration-300 ease-out"
-                          strokeWidth="4"
-                          strokeDasharray={2 * Math.PI * 32}
-                          strokeDashoffset={2 * Math.PI * 32 * (1 - design / 100)}
-                          strokeLinecap="round"
-                        />
-                      </svg>
-                      <span className="absolute text-sm font-bold font-mono text-snow">
-                        {design}%
-                      </span>
-                    </div>
-                    <span className="text-xs font-mono font-medium text-light-gray">UI/UX</span>
+                    <span className="font-mono font-medium text-[11px] text-ink mt-2">
+                      {meter.title}
+                    </span>
+                    <span className="text-[9px] font-mono text-faint mt-0.5">
+                      {meter.detail}
+                    </span>
                   </div>
-
-                  {/* Circle 3 */}
-                  <div className="flex flex-col items-center gap-2">
-                    <div className="relative w-18 h-18 sm:w-20 sm:h-20 flex items-center justify-center">
-                      <svg className="w-full h-full -rotate-90" viewBox="0 0 80 80">
-                        <circle
-                          cx="40"
-                          cy="40"
-                          r="32"
-                          className="stroke-gray-800 fill-none"
-                          strokeWidth="4"
-                        />
-                        <circle
-                          cx="40"
-                          cy="40"
-                          r="32"
-                          className="stroke-accent fill-none transition-all duration-300 ease-out"
-                          strokeWidth="4"
-                          strokeDasharray={2 * Math.PI * 32}
-                          strokeDashoffset={2 * Math.PI * 32 * (1 - engLogic / 100)}
-                          strokeLinecap="round"
-                        />
-                      </svg>
-                      <span className="absolute text-sm font-bold font-mono text-snow">
-                        {engLogic}%
-                      </span>
-                    </div>
-                    <span className="text-xs font-mono font-medium text-light-gray">Engineering</span>
-                  </div>
-                </div>
-
-                <p className="text-xs text-light-gray leading-relaxed border-t border-white/5 pt-3">
-                  Combining algorithmic discipline from engineering studies with component-driven web frameworks and visual design tools.
-                </p>
-              </div>
-            </CardLayout>
+                );
+              })}
+            </div>
           </div>
 
-          {/* Linear Skill Meters Card */}
-          <div className="lg:col-span-7">
-            <CardLayout>
-              <div className="card-base p-6 md:p-8 h-full space-y-4">
-                <h3 className="font-display font-bold text-base text-snow uppercase tracking-wider border-b border-white/5 pb-3">
-                  Proficiency Breakdown
-                </h3>
-                <div className="space-y-4 pt-1">
-                  {linearSkills.map((skill, idx) => {
-                    const currentPercent = Math.round(scrollProgress * skill.target);
-                    return (
-                      <ProgressBar
-                        key={idx}
-                        label={skill.label}
-                        percent={`${currentPercent}%`}
-                        widthPercent={currentPercent}
-                      />
-                    );
-                  })}
+          {/* Linear Progress Bars */}
+          <div className="space-y-4 pt-2">
+            <p className="hud-label text-faint">CAPABILITY BREAKDOWN</p>
+            {linearSkills.map((skill, idx) => (
+              <div key={idx} className="space-y-1.5 font-mono text-xs">
+                <div className="flex items-center justify-between text-muted text-[11px]">
+                  <span>{skill.label}</span>
+                  <span className="text-ink font-semibold">{inView ? `${skill.percent}%` : '0%'}</span>
+                </div>
+                <div className="w-full h-1.5 bg-bg-sunken border border-line overflow-hidden">
+                  <div
+                    className="h-full bg-accent transition-all duration-1000 ease-out"
+                    style={{ width: inView ? `${skill.percent}%` : '0%' }}
+                  />
                 </div>
               </div>
-            </CardLayout>
+            ))}
           </div>
         </div>
 
-        {/* Tools & Tech Badges Cloud Card */}
-        <CardLayout>
-          <div className="card-base p-6 md:p-8 space-y-4">
-            <h3 className="font-display font-bold text-base text-snow uppercase tracking-wider border-b border-white/5 pb-3">
-              Tools, Libraries & Technologies
-            </h3>
-            <div className="flex flex-wrap gap-2.5 pt-2">
-              {techStack.map((tech, idx) => (
-                <Badge
-                  key={idx}
-                  title={tech}
-                  className="hover:border-accent/50 hover:text-accent transition-colors border border-white/5 py-2 px-3.5 text-xs font-mono"
-                />
-              ))}
-            </div>
+        {/* Right Column (7 cols): The Complete Toolset Grid */}
+        <div className="lg:col-span-7 bg-bg p-6 md:p-8 space-y-6">
+          <div className="flex items-center justify-between border-b border-line pb-3">
+            <span className="hud-label text-faint">TOOLING DIRECTORY // 5 CATEGORIES</span>
+            <span className="hud-label text-muted">VERIFIED SKILLS</span>
           </div>
-        </CardLayout>
+
+          <div className="space-y-5">
+            {toolCategories.map((group, gIdx) => (
+              <div key={gIdx} className="space-y-2">
+                <p className="hud-label text-faint text-[10px]">
+                  {group.category}
+                </p>
+                <div className="flex flex-wrap gap-1.5">
+                  {group.tools.map((tool, tIdx) => (
+                    <span
+                      key={tIdx}
+                      className="px-3 py-1.5 border border-line bg-bg-raised text-xs font-mono text-ink hover:bg-invert-bg hover:text-invert-fg transition-all cursor-default select-none"
+                    >
+                      {tool}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="border-t border-line pt-4 flex items-center justify-between hud-label text-faint text-[10px]">
+            <span>TOTAL SKILLSETS: 22+</span>
+            <span>PRODUCTION READY</span>
+          </div>
+        </div>
+
       </div>
-    </section>
+    </SectionFrame>
   );
 }

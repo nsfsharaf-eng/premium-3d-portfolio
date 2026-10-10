@@ -32,11 +32,19 @@ import { LuArrowUp } from 'react-icons/lu';
 gsap.registerPlugin(ScrollTrigger);
 
 export default function App() {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(() => {
+    if (typeof window !== 'undefined' && window.location.search.includes('noload')) {
+      return false;
+    }
+    return true;
+  });
   const [activeProject, setActiveProject] = useState(null);
   const [toasts, setToasts] = useState([]);
   
   const [theme, setTheme] = useState(() => {
+    const params = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
+    const urlTheme = params ? params.get('theme') : null;
+    if (urlTheme === 'light' || urlTheme === 'dark') return urlTheme;
     const saved = localStorage.getItem('portfolio-theme');
     if (saved === 'dark' || saved === 'light') return saved;
     const preferredDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -51,6 +59,21 @@ export default function App() {
     }
     localStorage.setItem('portfolio-theme', theme);
   }, [theme]);
+
+  // Support direct section scrolling via query param
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const scrollTarget = params.get('scroll');
+    if (scrollTarget) {
+      setTimeout(() => {
+        const el = document.getElementById(scrollTarget);
+        if (el) {
+          const y = el.getBoundingClientRect().top + window.scrollY - 48;
+          window.scrollTo(0, y);
+        }
+      }, 100);
+    }
+  }, []);
   
   const defaultTestimonials = [
     {
@@ -199,23 +222,23 @@ export default function App() {
       {loading ? (
         <Loader onComplete={() => setLoading(false)} />
       ) : (
-        <div className={`min-h-screen w-full ${theme === 'dark' ? 'bg-black text-white' : 'bg-slate-50 text-slate-900'} select-none selection:bg-accent selection:text-midnight font-sans overflow-x-hidden relative transition-colors duration-500`}>
+        <div className="min-h-screen w-full bg-bg text-ink font-sans selection:bg-invert-bg selection:text-invert-fg relative transition-colors duration-300">
           
           {/* Custom Cursor */}
           <CustomCursor />
 
-          {/* Background Glows & Particle Canvas */}
+          {/* Background Subtle Architectural Grid */}
           <BackgroundEffects theme={theme} />
 
-          {/* Fixed Top Navbar */}
+          {/* Fixed Top Segmented ArtCraft Navbar */}
           <Navbar
             theme={theme}
             setTheme={setTheme}
             onAddTestimonial={handleAddTestimonial}
           />
 
-          {/* ═══════════════ Main Scrollable Page ═══════════════ */}
-          <main className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-12 space-y-12">
+          {/* ═══════════════ Seamless Architectural Sections ═══════════════ */}
+          <main className="relative w-full z-10">
             <Hero theme={theme} />
             <Profile3DSection theme={theme} />
             <About />
@@ -224,11 +247,11 @@ export default function App() {
             <Projects onSelectProject={setActiveProject} />
             <Education />
             <Certifications />
-            <Reviews testimonials={testimonials} />
+            <Reviews testimonials={testimonials} onOpenModal={() => {}} />
             <Contact onShowToast={handleShowToast} />
           </main>
 
-          {/* Footer */}
+          {/* Directory Footer */}
           <Footer />
 
           {/* Project Details Modal */}
@@ -240,45 +263,49 @@ export default function App() {
           )}
 
           {/* Toast Notification Stack */}
-          <div className="fixed bottom-6 left-6 z-[110] flex flex-col gap-3 pointer-events-none">
+          <div className="fixed bottom-6 left-6 z-[110] flex flex-col gap-2 pointer-events-none">
             {toasts.map((toast) => (
               <div
                 key={toast.id}
-                className={`flex gap-3 bg-deep/95 border border-white/10 p-4 rounded-xl shadow-2xl backdrop-blur-md pointer-events-auto transition-all duration-300 max-w-sm ${
+                className={`flex gap-3 bg-bg border border-line p-4 shadow-2xl backdrop-blur-md pointer-events-auto transition-all duration-300 max-w-sm ${
                   toast.leaving ? 'opacity-0 -translate-x-10 scale-95' : 'opacity-100 translate-x-0 scale-100'
                 }`}
               >
-                <div className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 text-midnight text-xs font-bold ${
-                  toast.type === 'success' ? 'bg-accent' : 'bg-red-500 text-white'
+                <div className={`w-6 h-6 border flex items-center justify-center shrink-0 font-mono text-[11px] font-bold ${
+                  toast.type === 'success'
+                    ? 'border-accent bg-accent/10 text-accent'
+                    : 'border-danger bg-danger/10 text-danger'
                 }`}>
                   {toast.type === 'success' ? '✓' : '!'}
                 </div>
                 <div>
-                  <strong className="block text-xs font-bold font-display text-snow">{toast.title}</strong>
-                  <p className="text-xs text-light-gray mt-0.5">{toast.message}</p>
+                  <strong className="block text-xs font-mono uppercase tracking-wider text-ink-strong">{toast.title}</strong>
+                  <p className="text-xs text-muted mt-0.5">{toast.message}</p>
                 </div>
               </div>
             ))}
           </div>
 
-          {/* Floating Actions (WhatsApp & Back to Top) */}
-          <div className="fixed right-6 bottom-6 z-40 flex flex-col gap-2.5">
+          {/* Floating Actions */}
+          <div className="fixed right-6 bottom-6 z-40 flex flex-col gap-2">
             <a
               href="https://wa.me/94720243581?text=Hello%20Naseef%2C%20I%20visited%20your%20portfolio."
               target="_blank"
               rel="noreferrer"
               aria-label="Contact on WhatsApp"
-              className="w-11 h-11 rounded-full bg-deep hover:bg-[#25D366] text-light-gray hover:text-white border border-white/10 hover:border-transparent flex items-center justify-center shadow-2xl transition-all duration-300 hover:scale-110"
+              className="w-10 h-10 border border-line bg-bg hover:bg-invert-bg hover:text-invert-fg text-muted flex items-center justify-center shadow-xl transition-all cursor-pointer"
+              title="Chat on WhatsApp"
             >
-              <FaWhatsapp className="text-lg" />
+              <FaWhatsapp className="text-base" />
             </a>
             
             <button
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
               aria-label="Back to top"
-              className="w-11 h-11 rounded-full bg-deep hover:bg-accent text-light-gray hover:text-midnight border border-white/10 hover:border-transparent flex items-center justify-center shadow-2xl transition-all duration-300 hover:scale-110"
+              className="w-10 h-10 border border-line bg-bg hover:bg-invert-bg hover:text-invert-fg text-muted flex items-center justify-center shadow-xl transition-all cursor-pointer"
+              title="Return to Top"
             >
-              <LuArrowUp className="text-lg" />
+              <LuArrowUp className="text-base" />
             </button>
           </div>
 

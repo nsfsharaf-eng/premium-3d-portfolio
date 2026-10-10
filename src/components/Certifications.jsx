@@ -1,56 +1,71 @@
 import { useState } from 'react';
-import SectionHeader from './SectionHeader';
-import CardLayout from './CardLayout';
-import { LuExternalLink } from 'react-icons/lu';
+import SectionFrame from './SectionFrame';
+import { LuExternalLink, LuAward } from 'react-icons/lu';
 
 const certificationsData = [
   {
+    index: '01',
     provider: "Google via Coursera",
     title: "Introduction to AI",
     category: "ai",
-    url: "https://www.coursera.org/account/accomplishments/verify/7IT9T9F4FSG1"
+    url: "https://www.coursera.org/account/accomplishments/verify/7IT9T9F4FSG1",
+    date: "Verified"
   },
   {
+    index: '02',
     provider: "Google via Coursera",
     title: "Maximize Productivity With AI Tools",
     category: "productivity",
-    url: "https://www.coursera.org/account/accomplishments/verify/WLLSOTNRZLZX"
+    url: "https://www.coursera.org/account/accomplishments/verify/WLLSOTNRZLZX",
+    date: "Verified"
   },
   {
+    index: '03',
     provider: "Google via Coursera",
     title: "Discover the Art of Prompting",
     category: "ai",
-    url: "https://www.coursera.org/account/accomplishments/verify/UAZDU6PM0CVF"
+    url: "https://www.coursera.org/account/accomplishments/verify/UAZDU6PM0CVF",
+    date: "Verified"
   },
   {
-    provider: "Coursera",
+    index: '04',
+    provider: "Coursera Project Network",
     title: "Use Canva to Design Digital Course Collateral",
     category: "design",
-    url: "https://www.coursera.org/account/accomplishments/verify/YOLIMSTGFCNV"
+    url: "https://www.coursera.org/account/accomplishments/verify/YOLIMSTGFCNV",
+    date: "Verified"
   },
   {
-    provider: "Canva",
+    index: '05',
+    provider: "Canva Design School",
     title: "Canva Essentials",
     category: "design",
-    url: "https://www.canva.com/design-school/certification-award/443c0855-46ad-4663-8080-4788524b044e"
+    url: "https://www.canva.com/design-school/certification-award/443c0855-46ad-4663-8080-4788524b044e",
+    date: "Verified"
   },
   {
-    provider: "Alison",
+    index: '06',
+    provider: "Alison Learning",
     title: "Graphic Design - Visual and Graphic Design",
     category: "design",
-    url: "https://alison.com/verify/d54a627364"
+    url: "https://alison.com/verify/d54a627364",
+    date: "Verified"
   },
   {
+    index: '07',
     provider: "LinkedIn Learning",
     title: "Introduction to Prompt Engineering for Generative AI",
     category: "ai",
-    url: "https://www.linkedin.com/learning/certificates/713d8e25dbae9e47d16c06ece518b322a5902b2759fb89682e2b17d3027ce693"
+    url: "https://www.linkedin.com/learning/certificates/713d8e25dbae9e47d16c06ece518b322a5902b2759fb89682e2b17d3027ce693",
+    date: "Verified"
   },
   {
+    index: '08',
     provider: "LinkedIn Learning",
     title: "Tips to Work with Difficult People",
     category: "professional",
-    url: "https://www.linkedin.com/learning/certificates/3fb23e40ab005ed1cdaea9350672f877911a27aadc3f6e4a0b101cf69d6ad53c"
+    url: "https://www.linkedin.com/learning/certificates/3fb23e40ab005ed1cdaea9350672f877911a27aadc3f6e4a0b101cf69d6ad53c",
+    date: "Verified"
   }
 ];
 
@@ -58,69 +73,92 @@ export default function Certifications() {
   const [activeFilter, setActiveFilter] = useState('all');
 
   const filterChips = [
-    { label: 'All', id: 'all' },
-    { label: 'AI', id: 'ai' },
-    { label: 'Design', id: 'design' },
+    { label: 'All (8)', id: 'all' },
+    { label: 'AI & Prompts', id: 'ai' },
+    { label: 'Graphic Design', id: 'design' },
     { label: 'Productivity', id: 'productivity' },
     { label: 'Professional', id: 'professional' }
   ];
 
-  const filteredCerts = certificationsData.filter((cert) => {
-    return activeFilter === 'all' || cert.category === activeFilter;
-  });
+  const filtered = activeFilter === 'all'
+    ? certificationsData
+    : certificationsData.filter((c) => c.category === activeFilter);
 
   return (
-    <section id="certifications" className="relative w-full py-6 sm:py-8">
-      <SectionHeader title="Certifications & Continuous Learning" />
-
-      <div className="max-w-7xl mx-auto px-4 md:px-8">
-        {/* Filter Chips Bar */}
-        <div className="flex flex-wrap gap-2 mb-6">
-          {filterChips.map((chip) => (
-            <button
-              key={chip.id}
-              onClick={() => setActiveFilter(chip.id)}
-              className={`font-display text-xs font-semibold uppercase tracking-wider px-4 py-2 rounded-xl border transition-all duration-300 ${
-                activeFilter === chip.id
-                  ? 'bg-accent text-midnight border-accent font-bold'
-                  : 'bg-evening text-light-gray border-white/5 hover:border-accent/30 hover:text-snow'
-              }`}
-            >
-              {chip.label}
-            </button>
-          ))}
+    <SectionFrame
+      id="certifications"
+      index="07"
+      title="Certifications"
+      meta="8 Industry Verified Credentials"
+      headline="Verified"
+      italicWord="competency"
+      headlineAfter="& technical training."
+      subheading="Continuous professional learning across generative AI, graphic collateral design, workflow efficiency, and team collaboration."
+    >
+      {/* Filter Segmented Bar */}
+      <div className="border-t border-line bg-bg">
+        <div className="flex flex-wrap items-center gap-px bg-line p-px">
+          {filterChips.map((chip) => {
+            const isActive = activeFilter === chip.id;
+            return (
+              <button
+                key={chip.id}
+                onClick={() => setActiveFilter(chip.id)}
+                className={`px-4 py-2.5 hud-label transition-colors cursor-pointer ${
+                  isActive
+                    ? 'bg-invert-bg text-invert-fg'
+                    : 'bg-bg text-muted hover:text-ink hover:bg-bg-raised'
+                }`}
+              >
+                {chip.label}
+              </button>
+            );
+          })}
         </div>
 
-        {/* Grid Display */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {filteredCerts.map((cert, idx) => (
-            <CardLayout key={idx}>
-              <a
-                href={cert.url}
-                target="_blank"
-                rel="noreferrer"
-                className="card-base p-6 h-full flex flex-col justify-between border border-white/5 hover:border-accent/30 group transition-all"
-              >
-                <div>
-                  <span className="text-[10px] font-mono text-accent uppercase tracking-widest block mb-2">
-                    {cert.provider}
+        {/* 2-Column Gap-px Grid */}
+        <div className="grid gap-px border-t border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
+          {filtered.map((cert) => (
+            <article
+              key={cert.index}
+              className="bg-bg p-6 flex flex-col justify-between group hover:bg-bg-raised transition-colors space-y-4"
+            >
+              <div>
+                <div className="flex items-center justify-between border-b border-line pb-2.5 mb-3">
+                  <span className="hud-label text-faint">
+                    {cert.index} / {cert.category.toUpperCase()}
                   </span>
-                  <h4 className="font-display font-bold text-snow text-sm leading-snug group-hover:text-accent transition-colors">
-                    {cert.title}
-                  </h4>
+                  <span className="w-1.5 h-1.5 bg-accent" />
                 </div>
 
-                <div className="flex items-center justify-between border-t border-white/5 pt-3 mt-4 text-xs font-mono text-light-gray">
-                  <span className="capitalize">{cert.category}</span>
-                  <span className="flex items-center gap-1 text-accent group-hover:underline">
-                    Verify <LuExternalLink className="text-xs" />
-                  </span>
-                </div>
-              </a>
-            </CardLayout>
+                <p className="hud-label text-accent text-[10px] mb-1">
+                  {cert.provider}
+                </p>
+
+                <h4 className="font-display font-medium text-sm text-ink-strong group-hover:text-accent transition-colors leading-snug">
+                  {cert.title}
+                </h4>
+              </div>
+
+              <div className="pt-3 border-t border-line flex items-center justify-between">
+                <span className="text-[10px] font-mono text-faint">
+                  ACCOMPLISHMENT
+                </span>
+
+                <a
+                  href={cert.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-1.5 text-xs font-mono text-muted hover:text-ink transition-colors"
+                >
+                  <span>Verify</span>
+                  <LuExternalLink className="w-3 h-3 text-accent" />
+                </a>
+              </div>
+            </article>
           ))}
         </div>
       </div>
-    </section>
+    </SectionFrame>
   );
 }

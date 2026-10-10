@@ -1,58 +1,81 @@
-import { useEffect } from 'react';
-import AOS from 'aos';
-import SectionHeader from './SectionHeader';
-import CardLayout from './CardLayout';
+import React from 'react';
+import SectionFrame from './SectionFrame';
 import { FaQuoteLeft } from 'react-icons/fa';
 
-export default function Reviews({ testimonials = [] }) {
-  useEffect(() => {
-    AOS.init();
-  }, []);
-
+export default function Reviews({ testimonials = [], onOpenModal }) {
   return (
-    <section id="reviews" className="relative w-full py-6 sm:py-8">
-      <SectionHeader title="Recommendations & Client Feedback" />
+    <SectionFrame
+      id="reviews"
+      index="08"
+      title="Proof & Endorsements"
+      meta="Collaborator & Client Citations"
+      headline="Words from"
+      italicWord="collaborators"
+      headlineAfter="and colleagues."
+      subheading="Direct feedback on project delivery, technical execution, communication, and visual craftsmanship."
+    >
+      <div className="border-t border-line bg-bg">
+        {/* 4-Card Gap-px Grid */}
+        <div className="grid gap-px border-b border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
+          {testimonials.map((t, idx) => (
+            <article
+              key={idx}
+              className="bg-bg p-6 md:p-8 flex flex-col justify-between space-y-6 hover:bg-bg-raised transition-colors group"
+            >
+              <div>
+                {/* Top Card Bar */}
+                <div className="flex items-center justify-between border-b border-line pb-3 mb-4">
+                  <span className="hud-label text-faint">
+                    0{idx + 1} // CITATION
+                  </span>
+                  <span className="hud-label text-accent">
+                    VERIFIED
+                  </span>
+                </div>
 
-      <div className="max-w-7xl mx-auto px-4 md:px-8">
-        <div
-          className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-8 pt-4"
-          data-aos="fade-up"
-        >
-          {testimonials.map((t, key) => (
-            <CardLayout key={key}>
-              <div className="card-base p-6 md:p-8 h-full relative border border-white/5 flex flex-col justify-between">
-                {/* Floating Avatar */}
-                <div className="absolute z-10 right-6 -top-5 w-12 h-12 md:w-14 md:h-14 rounded-full border-2 border-accent overflow-hidden bg-evening shadow-lg">
+                <FaQuoteLeft className="text-accent/30 text-lg mb-3" />
+
+                <p className="text-sm text-muted leading-relaxed italic">
+                  "{t.message}"
+                </p>
+              </div>
+
+              {/* Author Row */}
+              <div className="pt-4 border-t border-line flex items-center gap-3">
+                <div className="w-10 h-10 border border-line bg-bg-raised p-0.5 shrink-0 overflow-hidden">
                   <img
                     src={t.avatar || '/assets/icon.png'}
                     alt={t.name}
                     className="w-full h-full object-cover"
-                    onError={(e) => {
-                      e.target.src = '/assets/icon.png';
-                    }}
+                    onError={(e) => { e.target.src = '/assets/icon.png'; }}
                   />
                 </div>
-
                 <div>
-                  <FaQuoteLeft className="text-accent/30 text-xl mb-3" />
-                  <p className="text-sm text-light-gray font-normal leading-relaxed italic pr-10">
-                    "{t.message}"
-                  </p>
-                </div>
-
-                <div className="pt-4 border-t border-white/5 mt-4">
-                  <h4 className="text-base font-bold font-display text-snow">
+                  <h4 className="font-display font-medium text-sm text-ink-strong group-hover:text-accent transition-colors">
                     {t.name}
                   </h4>
-                  <span className="text-xs text-accent font-mono block mt-0.5">
-                    {t.role || 'Client'}
+                  <span className="hud-label text-faint text-[10px] block">
+                    {t.role || 'Collaborator'}
                   </span>
                 </div>
               </div>
-            </CardLayout>
+            </article>
           ))}
         </div>
+
+        {/* Bottom Banner */}
+        <div className="p-6 md:p-8 flex flex-wrap items-center justify-between gap-4 bg-bg">
+          <p className="hud-label text-muted">
+            HAVE WORKED TOGETHER? SUBMISSIONS OPEN FOR PEER REVIEWS.
+          </p>
+          <a
+            href="mailto:nashafeng32@gmail.com?subject=Portfolio%20Review%20for%20Naseef"
+            className="btn-artcraft text-[10px] py-2 px-4"
+          >
+            Submit an Endorsement →
+          </a>
+        </div>
       </div>
-    </section>
+    </SectionFrame>
   );
 }

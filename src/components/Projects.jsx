@@ -1,141 +1,174 @@
-import { useEffect } from 'react';
-import AOS from 'aos';
-import SectionHeader from './SectionHeader';
-import Badge from './Badge';
-import CardLayout from './CardLayout';
-import { LuGlobe, LuArrowUpRight } from 'react-icons/lu';
+import React from 'react';
+import SectionFrame from './SectionFrame';
+import { LuArrowUpRight, LuGithub, LuEye } from 'react-icons/lu';
 
 const projectsData = [
   {
     id: 1,
+    index: '01',
+    code: 'PROJ_PORTFOLIO',
     title: "Portfolio Website",
     image: "/assets/portfolio-website.png",
-    description: "A personal portfolio focused on responsive layout, clean sections, and clear storytelling.",
+    description: "Personal engineering and visual design showcase featuring responsive layouts, fluid micro-interactions, clean sections, and clear storytelling.",
     github: "https://github.com/Nashaf-engr/Portfolio",
     demo: "https://github.com/Nashaf-engr/Portfolio",
-    tags: ["React", "TailwindCSS", "HTML", "JavaScript"]
+    tags: ["React 19", "TailwindCSS", "JavaScript", "Responsive UI"],
+    highlight: "Core Digital Identity",
   },
   {
     id: 2,
+    index: '02',
+    code: 'PROJ_AGRITECH',
     title: "Smart Plant Monitoring System",
     image: "/assets/smart-plantation.png",
-    description: "An Arduino-based monitoring concept for temperature, humidity, and soil moisture with a practical hardware focus.",
+    description: "An Arduino-based hardware and IoT monitoring system capturing temperature, humidity, and soil moisture with real-time sensor telemetries.",
     github: "https://smart-plant-monitoring-a-v2npbp4.gamma.site/",
     demo: "https://smart-plant-monitoring-a-v2npbp4.gamma.site/",
-    tags: ["Arduino", "Sensors", "IoT", "C++"]
+    tags: ["Arduino", "Sensors", "IoT Architecture", "C++ Logic"],
+    highlight: "Hardware & IoT",
   },
   {
     id: 3,
+    index: '03',
+    code: 'PROJ_HEALTH',
     title: "BMI Calculator",
     image: "/assets/bmi web.png",
-    description: "A modern calculator UI for quick health metric checks with responsive design.",
+    description: "A precision calculator web interface for instant biometric and health metric checks with responsive form ergonomics and real-time state feedback.",
     github: "https://github.com/Nashaf-engr/BMI-Calculator",
     demo: "https://github.com/Nashaf-engr/BMI-Calculator",
-    tags: ["HTML", "CSS", "JavaScript"]
+    tags: ["HTML5", "CSS3", "JavaScript ES6+", "DOM Logic"],
+    highlight: "Utility App",
   },
   {
     id: 4,
+    index: '04',
+    code: 'PROJ_HOSPITALITY',
     title: "Restaurant Website",
     image: "/assets/resturant-website.png",
-    description: "A concept site designed to present food, atmosphere, and menu-driven content.",
+    description: "A culinary concept platform designed to showcase food, atmosphere, curated menus, and dining booking flows with rich photography framing.",
     github: "https://github.com/Nashaf-engr/Sample-website-for-resturant",
     demo: "https://github.com/Nashaf-engr/Sample-website-for-resturant",
-    tags: ["HTML", "CSS", "Responsive Design"]
+    tags: ["HTML5", "CSS3", "Responsive Grid", "UX Flow"],
+    highlight: "Commercial Web",
   },
   {
     id: 5,
+    index: '05',
+    code: 'PROJ_TOURISM',
     title: "Travel Agency Website",
     image: "/assets/travel agency.png",
-    description: "A tourism-focused web design with destination-led presentation and booking intent.",
+    description: "A tourism-focused web design with destination-led presentation, booking intent optimization, itinerary layouts, and luxury layout aesthetics.",
     github: "https://github.com/Nashaf-engr/Travel-agency-website",
     demo: "https://github.com/Nashaf-engr/Travel-agency-website",
-    tags: ["HTML", "CSS", "UX Design"]
+    tags: ["HTML5", "CSS3", "UI/UX Design", "Booking Layout"],
+    highlight: "Travel & Leisure",
   }
 ];
 
 export default function Projects({ onSelectProject }) {
-  useEffect(() => {
-    AOS.init();
-  }, []);
-
   return (
-    <section id="work" className="relative w-full py-6 sm:py-8">
-      <SectionHeader title="Portfolio & Selected Projects" />
+    <SectionFrame
+      id="work"
+      index="05"
+      title="Selected Works"
+      meta="5 Production Deployments"
+      headline="Systems built for"
+      italicWord="scale"
+      headlineAfter="and structural clarity."
+      subheading="A curation of deployed software systems, embedded hardware prototypes, and bespoke user interfaces."
+    >
+      {/* 2-Column Gap-px Grid in ArtCraft Signature Style */}
+      <div className="grid gap-px border-t border-line bg-line md:grid-cols-2">
+        {projectsData.map((project) => (
+          <article
+            key={project.id}
+            className="bg-bg flex flex-col justify-between group hover:bg-bg-raised transition-colors"
+          >
+            <div>
+              {/* Card Top HUD Bar */}
+              <div className="flex items-center justify-between border-b border-line px-6 py-3">
+                <span className="hud-label text-muted">
+                  {project.index} // {project.code}
+                </span>
+                <span className="hud-label text-accent">
+                  {project.highlight}
+                </span>
+              </div>
 
-      <div className="max-w-7xl mx-auto px-4 md:px-8">
-        <div
-          className="grid grid-cols-1 md:grid-cols-2 gap-6 my-4"
-          data-aos="fade-up"
-        >
-          {projectsData.map((project) => (
-            <CardLayout key={project.id}>
-              <div className="card-base overflow-hidden h-full flex flex-col justify-between border border-white/5 group">
-                {/* Project Image Preview */}
-                <div
-                  className="w-full h-48 sm:h-56 md:h-64 overflow-hidden relative bg-black/40 cursor-pointer"
-                  onClick={() => onSelectProject && onSelectProject(project)}
-                >
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-full object-cover opacity-60 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-evening via-transparent to-transparent pointer-events-none" />
-                </div>
+              {/* Media Viewport */}
+              <div
+                onClick={() => onSelectProject && onSelectProject(project)}
+                className="relative aspect-video w-full overflow-hidden bg-bg-sunken border-b border-line cursor-pointer"
+              >
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                  onError={(e) => { e.target.src = '/assets/cover.png'; }}
+                />
 
-                {/* Details Panel */}
-                <div className="p-6 space-y-3 flex-1 flex flex-col justify-between">
-                  <div>
-                    <div className="flex items-start justify-between gap-4">
-                      <h3
-                        onClick={() => onSelectProject && onSelectProject(project)}
-                        className="text-lg sm:text-xl font-bold font-display text-snow hover:text-accent transition-colors cursor-pointer"
-                      >
-                        {project.title}
-                      </h3>
-                      <div className="flex items-center gap-2 shrink-0">
-                        {project.demo && (
-                          <a
-                            href={project.demo}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="text-light-gray hover:text-accent hover:scale-110 transition-all p-1"
-                            title="Live Demo / Website"
-                          >
-                            <LuGlobe className="text-lg" />
-                          </a>
-                        )}
-                        {project.github && (
-                          <a
-                            href={project.github}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="text-light-gray hover:text-accent hover:scale-110 transition-all p-1"
-                            title="Repository / Source"
-                          >
-                            <LuArrowUpRight className="text-lg" />
-                          </a>
-                        )}
-                      </div>
-                    </div>
-
-                    <p className="text-xs sm:text-sm text-light-gray font-normal leading-relaxed mt-2 line-clamp-3">
-                      {project.description}
-                    </p>
-                  </div>
-
-                  {/* Technology Badges */}
-                  <div className="pt-3 border-t border-white/5 flex flex-wrap gap-2">
-                    {project.tags.map((tag, idx) => (
-                      <Badge key={idx} title={tag} className="border border-white/5" />
-                    ))}
-                  </div>
+                {/* View Details Hover Overlay */}
+                <div className="absolute inset-0 bg-bg/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[2px]">
+                  <span className="btn-artcraft text-xs py-2 px-4 shadow-xl">
+                    <LuEye className="w-3.5 h-3.5" />
+                    <span>Inspect System</span>
+                  </span>
                 </div>
               </div>
-            </CardLayout>
-          ))}
-        </div>
+
+              {/* Card Body */}
+              <div className="p-6 md:p-8 space-y-4">
+                <h3
+                  onClick={() => onSelectProject && onSelectProject(project)}
+                  className="font-display font-medium text-2xl text-ink-strong group-hover:text-accent transition-colors cursor-pointer"
+                >
+                  {project.title}
+                </h3>
+
+                <p className="text-sm text-muted leading-relaxed">
+                  {project.description}
+                </p>
+
+                {/* Tag Cloud */}
+                <div className="flex flex-wrap gap-1.5 pt-1">
+                  {project.tags.map((tag, tIdx) => (
+                    <span
+                      key={tIdx}
+                      className="px-2.5 py-1 text-[10px] font-mono uppercase tracking-wider text-faint border border-line bg-bg-sunken"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Bottom Actions Row */}
+            <div className="border-t border-line p-6 pt-4 flex items-center justify-between">
+              <a
+                href={project.demo}
+                target="_blank"
+                rel="noreferrer"
+                className="btn-artcraft py-2 px-4 text-[10px]"
+              >
+                <span>Live Demo</span>
+                <LuArrowUpRight className="w-3 h-3" />
+              </a>
+
+              <a
+                href={project.github}
+                target="_blank"
+                rel="noreferrer"
+                className="btn-artcraft-outline py-2 px-3 text-[10px]"
+                title="View Source Code"
+              >
+                <LuGithub className="w-3.5 h-3.5" />
+                <span>Source</span>
+              </a>
+            </div>
+          </article>
+        ))}
       </div>
-    </section>
+    </SectionFrame>
   );
 }

@@ -8,46 +8,42 @@ export default {
   theme: {
     extend: {
       colors: {
-        accent: '#1fdf64',
-        'accent-dark': '#19b853',
-        deep: '#121212',
-        midnight: '#181818',
-        evening: '#1a1a1a',
-        'dark-gray': '#282828',
-        'slate-gray': '#404040',
-        'light-gray': '#959595',
-        silver: '#B3B3B3',
-        snow: '#ffffff',
-        // Keep legacy aliases for any remaining references
-        luxury: {
-          yellow: '#1fdf64',
-          yellowDark: '#19b853',
-          gold: '#17a84b',
-          zinc: {
-            950: '#000000',
-            900: '#121212',
-            800: '#181818',
-          }
-        }
+        // ArtCraft CSS variable bindings
+        bg: 'var(--bg)',
+        'bg-raised': 'var(--bg-raised)',
+        'bg-sunken': 'var(--bg-sunken)',
+        ink: 'var(--ink)',
+        'ink-strong': 'var(--ink-strong)',
+        muted: 'var(--muted)',
+        faint: 'var(--faint)',
+        line: 'var(--line)',
+        'line-strong': 'var(--line-strong)',
+        accent: 'var(--accent)',
+        'accent-ink': 'var(--accent-ink)',
+        'invert-bg': 'var(--invert-bg)',
+        'invert-fg': 'var(--invert-fg)',
+        danger: 'var(--danger)',
+
+        // Fallbacks / legacy aliases for existing component compatibility
+        midnight: 'var(--bg)',
+        deep: 'var(--bg-sunken)',
+        evening: 'var(--bg-raised)',
+        snow: 'var(--ink-strong)',
+        silver: 'var(--ink)',
+        'light-gray': 'var(--muted)',
       },
       fontFamily: {
-        sans: ['Manrope', 'sans-serif'],
-        display: ['Space Grotesk', 'sans-serif'],
+        sans: ['Inter', 'sans-serif'],
+        display: ['Archivo', 'sans-serif'],
+        serif: ['"Instrument Serif"', 'serif'],
+        mono: ['"JetBrains Mono"', 'monospace'],
+      },
+      letterSpacing: {
+        hud: '0.15em',
+        cta: '0.12em',
       },
       animation: {
-        'marquee-slow': 'marquee 40s linear infinite',
-        'marquee-reverse': 'marquee-rev 40s linear infinite',
-        'pulse-slow': 'pulse 3s ease-in-out infinite',
-      },
-      keyframes: {
-        marquee: {
-          '0%': { transform: 'translateX(0%)' },
-          '100%': { transform: 'translateX(-50%)' }
-        },
-        'marquee-rev': {
-          '0%': { transform: 'translateX(-50%)' },
-          '100%': { transform: 'translateX(0%)' }
-        }
+        'pulse-subtle': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
       }
     },
   },
