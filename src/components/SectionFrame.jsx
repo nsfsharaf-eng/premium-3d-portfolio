@@ -57,7 +57,7 @@ export default function SectionFrame({
                     </span>
                   </>
                 )}
-                {headlineAfter}
+                {headlineAfter && /^\w|^&/.test(headlineAfter) ? ` ${headlineAfter}` : headlineAfter}
               </h2>
             )}
             {subheading && (
