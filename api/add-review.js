@@ -30,7 +30,7 @@ export default async function handler(req, res) {
   }
 
   // Repository configuration from environment or fallbacks
-  const owner = process.env.VERCEL_GIT_REPO_OWNER || 'Nashaf-engr';
+  const owner = process.env.VERCEL_GIT_REPO_OWNER || 'nsfsharaf-eng';
   const repo = process.env.VERCEL_GIT_REPO_SLUG || 'New-portfolio-theme';
   const branch = process.env.VERCEL_GIT_COMMIT_REF || 'main';
   const path = 'public/reviews.json';
