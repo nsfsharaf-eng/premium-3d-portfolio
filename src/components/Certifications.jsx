@@ -66,6 +66,14 @@ const certificationsData = [
     category: "professional",
     url: "https://www.linkedin.com/learning/certificates/3fb23e40ab005ed1cdaea9350672f877911a27aadc3f6e4a0b101cf69d6ad53c",
     date: "Verified"
+  },
+  {
+    index: '09',
+    provider: "Claude Academy (Anthropic)",
+    title: "Claude Code in action",
+    category: "ai",
+    url: "https://academy.claude.com/verify/2a39a2da83b534851290dc3b192ba710",
+    date: "Verified"
   }
 ];
 
@@ -73,7 +81,7 @@ export default function Certifications() {
   const [activeFilter, setActiveFilter] = useState('all');
 
   const filterChips = [
-    { label: 'All (8)', id: 'all' },
+    { label: 'All (9)', id: 'all' },
     { label: 'AI & Prompts', id: 'ai' },
     { label: 'Graphic Design', id: 'design' },
     { label: 'Productivity', id: 'productivity' },
@@ -89,7 +97,7 @@ export default function Certifications() {
       id="certifications"
       index="07"
       title="Certifications"
-      meta="8 Industry Verified Credentials"
+      meta="9 Industry Verified Credentials"
       headline="Verified"
       italicWord="competency"
       headlineAfter="& technical training."
@@ -162,3 +170,4 @@ export default function Certifications() {
     </SectionFrame>
   );
 }
+
