@@ -74,6 +74,14 @@ const certificationsData = [
     category: "ai",
     url: "https://academy.claude.com/verify/2a39a2da83b534851290dc3b192ba710",
     date: "Verified"
+  },
+  {
+    index: '10',
+    provider: "Dubai Centre for AI (Dubai Future Foundation)",
+    title: "1 Million Prompters - Certificate of Completion",
+    category: "ai",
+    url: "https://omp.dub.ai/certificate/Ar7tBVwI3SgF",
+    date: "Verified"
   }
 ];
 
@@ -81,7 +89,7 @@ export default function Certifications() {
   const [activeFilter, setActiveFilter] = useState('all');
 
   const filterChips = [
-    { label: 'All (9)', id: 'all' },
+    { label: 'All (10)', id: 'all' },
     { label: 'AI & Prompts', id: 'ai' },
     { label: 'Graphic Design', id: 'design' },
     { label: 'Productivity', id: 'productivity' },
@@ -97,7 +105,7 @@ export default function Certifications() {
       id="certifications"
       index="07"
       title="Certifications"
-      meta="9 Industry Verified Credentials"
+      meta="10 Industry Verified Credentials"
       headline="Verified"
       italicWord="competency"
       headlineAfter="& technical training."
